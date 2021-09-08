@@ -33,7 +33,7 @@ def lambda_handler(event, context):
     else:
         response='not healthy TG available'
 
-    print('RETURN : ' + response)
+    print('RETURN : ' + json.dumps(str(response))
     return {
         'statusCode': 200,
         'body': json.dumps(str(response))
