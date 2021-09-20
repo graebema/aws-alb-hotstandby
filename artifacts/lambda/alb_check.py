@@ -18,22 +18,24 @@ def lambda_handler(event, context):
     health_standby=get_tg_health(alb_tg_hotstandby_arn)
     print('standby tg health=' + health_standby)
 
+    # possible health values are:
+    # healthy, initial, unhealthy, unused, draining, unavailable
+
     # check health values: healthy, unused
+    # if default tg is unhealthy, switch to hotstandby
+    # no switchback implemented, assume to do this manually after
+    # investigating the reason for the outage
     if (health_default == 'healthy'):
         # healthy
         response='nothing todo default tg in use and healthy'
-    elif(health_default == 'unused'):
-        # assign default tg to alb
-        response=assign_tg(listener_arn,alb_tg_arn)
-        #print('need to assign default to ALB')
     elif (health_standby == 'unused'):
         # assign standy to ALB
         response=assign_tg(listener_arn,alb_tg_hotstandby_arn)
         #print('need to assign standby to ALB')
     else:
-        response='not healthy TG available'
+        response='no healthy TG available'
 
-    print('RETURN : ' + json.dumps(str(response))
+    print('RETURN : ' + json.dumps(str(response)))
     return {
         'statusCode': 200,
         'body': json.dumps(str(response))
