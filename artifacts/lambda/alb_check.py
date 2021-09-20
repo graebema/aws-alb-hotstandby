@@ -31,9 +31,9 @@ def lambda_handler(event, context):
     elif (health_standby == 'unused'):
         # assign standy to ALB
         response=assign_tg(listener_arn,alb_tg_hotstandby_arn)
-        #print('need to assign standby to ALB')
+        #print('assigning standby to ALB')
     else:
-        response='no healthy TG available'
+        response='nothing to do or no healthy TG available'
 
     print('RETURN : ' + json.dumps(str(response)))
     return {
