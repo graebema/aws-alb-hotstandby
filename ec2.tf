@@ -35,7 +35,7 @@ module "ec2" {
 module "ec2-2" {
   source    = "./modules/ec2-ux"
   name      = "ec2-hotstandby"
-  subnet_id = module.vpc.private_subnet_ids.0
+  subnet_id = module.vpc.private_subnet_ids.1
   securitygroups = [
     aws_security_group.allow-ping.id,
     aws_security_group.allow-http-alb.id
@@ -46,7 +46,7 @@ module "ec2-2" {
   ebs_size               = 1
   ebs_kms_key_arn        = aws_kms_key.key.arn
   ebs_mountpoint         = "/data"
-  availability_zone      = "eu-central-1a"
+  availability_zone      = "eu-central-1b"
   cloudwatch_config_file = "cloudwatch_cfg.json"
   init_script            = "httpd.sh"
   tags                   = local.tags
