@@ -129,14 +129,22 @@ data "aws_region" "current" {}
 ## alb_name needs to be converted to lowercase!
 resource "aws_s3_bucket" "log-bucket" {
   bucket = "alb-log-${data.aws_caller_identity.current.account_id}-${lower(var.alb_name)}"
-  versioning {
-    enabled = true
+}
+
+# s3 versioning
+resource "aws_s3_bucket_versioning" "versioning" {
+  bucket = aws_s3_bucket.log-bucket.id
+  versioning_configuration {
+    status = "Enabled"
   }
-  server_side_encryption_configuration {
-    rule {
-      apply_server_side_encryption_by_default {
-        sse_algorithm = "AES256"
-      }
+}
+# s3 encryption
+resource "aws_s3_bucket_server_side_encryption_configuration" "enc" {
+  bucket = aws_s3_bucket.log-bucket.id
+
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm = "AES256"
     }
   }
 }
