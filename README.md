@@ -4,6 +4,7 @@ This is the code for a [tutorial on Medium](https://martingraeber.medium.com/hot
 To run this code, rename the terraform.tfvars.sample to terraform.tfvars and adapt the variables for AWS accountId, route53 zone and ALB fqdn to your environment.
 
 This code has been tested with Terraform v1.0.7.
+Update 03-14-2025: Code has been adapted and tested with Terraform v1.11.2
 
 **Show your support**
 
